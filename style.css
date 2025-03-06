@@ -1,0 +1,429 @@
+:root {
+  --primary-color: #6c5ce7;
+  --secondary-color: #a29bfe;
+  --background-color: #1e1e2e;
+  --grid-color: #2d2d3f;
+  --text-color: #f8f8f2;
+  --border-color: #44475a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.game-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 800px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.tetris-container {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  background-color: var(--grid-color);
+  border: 2px solid var(--border-color);
+}
+
+canvas {
+  display: block;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 200px;
+}
+
+.next-piece {
+  background-color: var(--grid-color);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.next-piece h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.next-piece-canvas {
+  background-color: #2a2a3a;
+  border-radius: 4px;
+}
+
+.stats {
+  background-color: var(--grid-color);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.stats div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats span {
+  font-weight: bold;
+}
+
+.controls {
+  background-color: var(--grid-color);
+  border-radius: 8px;
+  padding: 15px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.controls h2 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.controls ul {
+  list-style: none;
+}
+
+.controls li {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.key {
+  background-color: var(--secondary-color);
+  color: #2d2d3f;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  min-width: 30px;
+  text-align: center;
+}
+
+.game-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 20;
+}
+
+.game-message.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.game-message h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+.fullscreen-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  background-color: rgba(108, 92, 231, 0.7);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.fullscreen-btn:hover {
+  background-color: rgba(108, 92, 231, 1);
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.mobile-controls {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.mobile-controls button {
+  flex: 1;
+  min-width: 70px;
+  height: 50px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key-indicator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  background: rgba(108, 92, 231, 0.7);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.key-indicator.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+body.fullscreen {
+  padding: 0;
+  overflow: hidden;
+}
+
+body.fullscreen .header,
+body.fullscreen .mobile-controls {
+  display: none;
+}
+
+body.fullscreen .game-container {
+  max-width: 100%;
+  height: 100vh;
+  margin: 0;
+  gap: 0;
+}
+
+body.fullscreen .tetris-container {
+  border-radius: 0;
+  border: none;
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+body.fullscreen .sidebar {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 10;
+  background-color: rgba(45, 45, 63, 0.85);
+  padding: 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+body.fullscreen canvas#tetris {
+  max-height: 100vh;
+  max-width: 100%;
+}
+
+body.fullscreen .fullscreen-btn {
+  z-index: 20;
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .next-piece,
+  .stats,
+  .controls {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .mobile-controls {
+    display: flex;
+  }
+
+  .controls {
+    display: none;
+  }
+
+  body.fullscreen .sidebar {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    flex-direction: column;
+  }
+
+  .next-piece,
+  .stats {
+    width: 100%;
+  }
+
+  body.fullscreen .sidebar {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+  }
+}
+ 
+
+/* Стили для оверлея авторизации */
+.auth-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Стили для модального окна */
+.auth-modal {
+  background-color: var(--grid-color);
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--border-color);
+  max-width: 400px;
+  width: 90%;
+}
+
+.auth-modal h2 {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.auth-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-modal label {
+  font-size: 1.1rem;
+}
+
+.auth-modal input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: #2a2a3a;
+  color: var(--text-color);
+}
+
+.auth-modal button {
+  background-color: var(--primary-color);
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-modal button:hover {
+  background-color: var(--secondary-color);
+}
